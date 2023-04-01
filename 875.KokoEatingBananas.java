@@ -2,31 +2,37 @@ import java.util.Arrays;
 
 class Solution {
   public int minEatingSpeed(int[] piles, int h) {
-    long beg = 1;
-    long end = Arrays.stream(piles).max().getAsInt() ;   
+    // Binary search for minimum k
+    // Set the left and right bounds of the search space
+    long left = 1;
+    long right = Arrays.stream(piles).max().getAsInt();
 
-    while (beg <= end) {
-      // prevents integer overflow for big numbers
-      // E.g. 
-      long mid = beg + (end - beg) / 2;
+    // Continue searching while the left bound is less than or equal to the right bound
+    while (left <= right) {
+        // Calculate the middle point of the search space
+        // Prevents for integer overflow
+        long mid = left + (right - left) / 2;
 
-      // Calculate total hours required at current k
-      long totalHours = 0;
+        // Calculate the total number of hours required to eat all bananas at the current eating speed
+        long totalHours = 0;
+        
+        for (int pile : piles) {
+            // Add the number of hours required to eat the current pile of bananas
+            // Note that we use the ceil function to round up any partial hours
+            totalHours += (long) Math.ceil((double) pile / mid);
+        }
 
-      // total koko eats per hour -> total to eat all bananas 
-      for (int pile : piles) {
-        totalHours += (long) Math.ceil((double) pile / mid);
-      }
-
-      // Update search bounds based on total hours
-      if (totalHours <= h) {
-        end = mid - 1;
-      }
-      else {
-        beg = mid + 1;
-      }
+        // Check if the total number of hours is less than or equal to the available time
+        // If so, we can try a slower eating speed to see if it's still possible to eat all the bananas in time
+        if (totalHours <= h) {
+            right = mid - 1; // Move the right bound of the search space to try slower eating speeds
+        } else {
+            left = mid + 1; // Move the left bound of the search space to try faster eating speeds
+        }
     }
 
-    return (int) beg;
+    // Return the minimum eating speed (i.e. the left bound of the search space)
+    return (int) left;
   }
+
 }
