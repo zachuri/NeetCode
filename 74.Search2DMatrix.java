@@ -1,32 +1,35 @@
 class Solution {
   public boolean searchMatrix(int[][] matrix, int target) {
-    // get the m and n of the matrix
-    int m = matrix.length;
-    int n = matrix[0].length;     
+    // initialize total row and column
+    int r = matrix.length;
+    int c = matrix[0].length;
 
-    // declare beg
+    // initialize beg and end
     int beg = 0;
-    int end = m * n - 1;
+    int end = r * c - 1; 
 
     while (beg <= end) {
+      // initalize mid 
       int mid = (beg + end) / 2;
 
-      // calculating the value of the 1d array
-      // first getting the middle row
-      // then middle of column with modulous -> using remainder 
-      int midValue = matrix[mid / n][mid % n];
+      // initalize midValue where it gets mid of
+      //  row and column 
+      //  row calculated of mid / column
+      //  column calculated of mid % column 
+      //    when 2d array is flat -> it gets the middle
+      int midValue = matrix[mid / c][mid % c];
 
       if (midValue == target) {
         return true;
-      }
-      else if (midValue < target) {
-        beg = mid + 1;
-      }
-      else {
+      } 
+      else if (target < midValue) {
         end = mid - 1;
       }
+      else {
+        beg = mid + 1;
+      }
     }
-    
+
     return false;
   }
 }
