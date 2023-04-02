@@ -19,7 +19,7 @@ class Solution {
       // init temp node
       ListNode tempNext = curr.next;
 
-      // next node will be prev
+      // next node will be prev -> reversing the linked list
       curr.next = prev;
 
       // prev will be pointing to current 
