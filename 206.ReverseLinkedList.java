@@ -14,10 +14,11 @@ class Solution {
     // initialize prev and curr
     ListNode prev = null;
     ListNode curr = head;
+    ListNode next = null;
 
     while (curr != null) {
-      // init temp node
-      ListNode tempNext = curr.next;
+      // point curr next to next  
+      next = curr.next;
 
       // next node will be prev -> reversing the linked list
       curr.next = prev;
