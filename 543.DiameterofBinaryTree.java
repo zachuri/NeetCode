@@ -1,3 +1,5 @@
+import javax.swing.tree.TreeNode;
+
 // Easier to understand solution but slower
 
 /**
@@ -16,25 +18,25 @@
  * }
  */
 class Solution {
-  private int height(TreeNode node) {
-    if (node == null) {
+  private int height(TreeNode root) {
+    if (root == null) {
       return 0;
     }
-    
-    return 1 + Math.max(height(node.left), height(node.right));
+
+    return 1 + Math.max(height(root.left), height(root.right));
   }
 
   public int diameterOfBinaryTree(TreeNode root) {
     if (root == null) {
-        return 0;
+      return 0; 
     }
-    
+
     int leftHeight = height(root.left);
     int rightHeight = height(root.right);
-    
+
     int leftDiameter = diameterOfBinaryTree(root.left);
     int rightDiameter = diameterOfBinaryTree(root.right);
-    
+
     return Math.max(leftHeight + rightHeight, Math.max(leftDiameter, rightDiameter));
   }
 }
